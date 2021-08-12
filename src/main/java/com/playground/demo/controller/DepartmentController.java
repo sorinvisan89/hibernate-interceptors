@@ -2,15 +2,16 @@ package com.playground.demo.controller;
 
 import com.playground.demo.model.DepartmentDTO;
 import com.playground.demo.service.DepartmentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/v1/departments")
 public class DepartmentController {
 
     private final DepartmentService departmentService;
@@ -20,9 +21,19 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
 
-    @GetMapping(path = "/{id}")
-    ResponseEntity<DepartmentDTO> getDepartments(@PathVariable(name = "id") final Integer departmentId) {
-        final DepartmentDTO result = departmentService.getDepartment(departmentId);
+    @GetMapping("/v1/departments")
+    @Tag(name = "Bad", description = "Not optimal")
+    @Operation(description = "Will trigger n + 1 queries")
+    ResponseEntity<List<DepartmentDTO>> getV1Departments() {
+        final List<DepartmentDTO> result = departmentService.findDepartments();
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/v2/departments")
+    @Tag(name = "Good", description = "Optimal")
+    @Operation(description = "Will trigger only 1 query")
+    ResponseEntity<List<DepartmentDTO>> getV2Departments() {
+        final List<DepartmentDTO> result = departmentService.fetchDepartments();
         return ResponseEntity.ok(result);
     }
 }

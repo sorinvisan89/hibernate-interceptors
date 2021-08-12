@@ -1,7 +1,9 @@
 package com.playground.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -26,9 +28,8 @@ public class Department {
     private String departmentName;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "parentDepartment")
-    @JsonBackReference
     @ToString.Exclude
-    List<Employee> employeeList = new ArrayList<>();
+    List<Employee> employees = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

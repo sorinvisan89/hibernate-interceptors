@@ -1,17 +1,15 @@
 package com.playground.demo.service;
 
 import com.playground.demo.entity.Department;
+import com.playground.demo.mapper.CustomMapper;
 import com.playground.demo.model.DepartmentDTO;
-import com.playground.demo.model.EmployeeDTO;
 import com.playground.demo.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -24,39 +22,25 @@ public class DepartmentService {
         this.departmentRepository = departmentRepository;
     }
 
-    public DepartmentDTO getDepartment(final Integer departmentId){
+    public List<DepartmentDTO> fetchDepartments() {
 
-        final Department department = departmentRepository.findById(departmentId)
-                .orElseThrow(() -> new EntityNotFoundException("No department found!"));
+        final List<Department> departments = departmentRepository.fetchDepartments();
 
-        return mapDepartment(department);
+        return  mapDepartments(departments);
     }
 
+    public List<DepartmentDTO> findDepartments() {
 
-    private DepartmentDTO mapDepartment(final Department department){
+        final List<Department> departments = departmentRepository.findAll();
 
-        final DepartmentDTO departmentDTO = new DepartmentDTO();
+        return mapDepartments(departments);
+    }
 
-        departmentDTO.setId(department.getDepartmentId());
-        department.setDepartmentName(department.getDepartmentName());
+    private List<DepartmentDTO> mapDepartments(final List<Department> departments) {
+        return departments.stream()
+                .map(CustomMapper::mapDepartment)
+                .collect(Collectors.toList());
 
-        final List<EmployeeDTO> employeeDTOS = new ArrayList<>();
-
-        department.getEmployeeList().forEach(employee -> {
-            final EmployeeDTO employeeDTO = new EmployeeDTO();
-            employeeDTO.setId(employee.getEmployeeId());
-            employeeDTO.setName(employee.getName());
-
-            employeeDTOS.add(employeeDTO);
-        });
-
-        departmentDTO.setEmployees(
-                Optional.of(employeeDTOS)
-                        .filter(List::isEmpty)
-                        .orElse(null)
-        );
-
-        return departmentDTO;
     }
 
 }

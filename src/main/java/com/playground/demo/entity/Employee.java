@@ -1,7 +1,5 @@
 package com.playground.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,9 +25,7 @@ public class Employee {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_department", foreignKey = @ForeignKey(name = "fk_employee_department"))
-    @JsonManagedReference
-    @ToString.Exclude
+    @JoinColumn(name = "employee_department")
     private Department parentDepartment;
 
     @Column(name = "salary")

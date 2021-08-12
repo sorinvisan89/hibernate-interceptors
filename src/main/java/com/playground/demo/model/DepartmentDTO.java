@@ -8,6 +8,8 @@ import java.util.List;
 public class DepartmentDTO {
 
     private Integer id;
+
     private String name;
+
     private List<EmployeeDTO> employees;
 }
