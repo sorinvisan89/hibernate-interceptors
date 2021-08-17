@@ -9,3 +9,5 @@
 3) Shows how **equality should be implemented in Entities** also handling Proxy test cases.
 
 4) Detect **N+1** problem and **inefficient queries** in tests with query counters and proxy listeners.
+
+5) Shows **entities states** and how they **managed in a transaction**.
