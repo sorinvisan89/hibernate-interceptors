@@ -14,13 +14,6 @@ public class Audit {
     @Enumerated(EnumType.STRING)
     private ActionType actionType;
 
-//    @Column
-//    private String context;
-
-//    @Column
-//    private String details;
-
-
     public enum ActionType{
 
         INSERT,

@@ -16,7 +16,7 @@ public class SQLStatementCountValidator {
         QueryCount queryCount = QueryCountHolder.getGrandTotal();
         long recordedSelectCount = queryCount.getSelect();
         if (expectedSelectCount != recordedSelectCount) {
-            throw new IllegalArgumentException("Expected Select count " + expectedSelectCount + " actual " + recordedSelectCount);
+            throw new AssertionError("Expected Select count: " + expectedSelectCount + " but actual is: " + recordedSelectCount);
         }
     }
 

@@ -8,6 +8,7 @@ import com.playground.demo.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,7 +51,7 @@ public class DepartmentService {
     public DepartmentDTO updateDepartment(final Integer departmentId, DepartmentRequestDTO updateDepartment) {
 
         final Department existingDepartment = departmentRepository.findById(departmentId)
-                .orElseThrow(() -> new IllegalArgumentException("Department does not exist!"));
+                .orElseThrow(() -> new EntityNotFoundException("Department does not exist!"));
 
         final String oldName = existingDepartment.getDepartmentName();
         final String newName = updateDepartment.getName();
@@ -69,7 +70,7 @@ public class DepartmentService {
     public DepartmentDTO deleteDepartment(final Integer departmentId) {
 
         final Department toDelete = departmentRepository.findById(departmentId)
-                .orElseThrow(() -> new IllegalArgumentException("Department does not exist!"));
+                .orElseThrow(() -> new EntityNotFoundException("Department does not exist!"));
 
         departmentRepository.delete(toDelete);
 
@@ -79,7 +80,7 @@ public class DepartmentService {
     public DepartmentDTO getDepartmentById(final Integer departmentId) {
 
         final Department existingDepartment = departmentRepository.findById(departmentId)
-                .orElseThrow(() -> new IllegalArgumentException("Department does not exist!"));
+                .orElseThrow(() -> new EntityNotFoundException("Department does not exist!"));
 
         return CustomMapper.mapDepartment(existingDepartment);
     }

@@ -10,6 +10,7 @@ import com.playground.demo.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,7 +44,7 @@ public class EmployeeService {
 
     public EmployeeDTO addEmployee(final EmployeeRequestDTO employeeRequest) {
         final Department department = departmentRepository.findById(employeeRequest.getDepartmentId())
-                .orElseThrow(() -> new IllegalArgumentException("No department found!"));
+                .orElseThrow(() -> new EntityNotFoundException("No department found!"));
 
 
         final Employee employee = new Employee();
