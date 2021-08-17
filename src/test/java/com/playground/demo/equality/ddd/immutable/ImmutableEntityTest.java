@@ -1,13 +1,13 @@
-package com.playground.demo.equality.ddd;
+package com.playground.demo.equality.ddd.immutable;
 
 import com.mihalcea.equality.AbstractEqualityDDDCheckTest;
-import com.playground.demo.equality.ddd.utils.ImmutableRootJpaEntity;
+import com.playground.demo.equality.ddd.utils.ImmutableFiscalRootJpaEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.junit.Test;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.UUID;
 
@@ -22,8 +22,7 @@ public class ImmutableEntityTest extends AbstractEqualityDDDCheckTest<ImmutableE
 
     @Test
     public void testEquality() {
-        Post post = new Post();
-        post.setId(UUID.randomUUID().toString());
+        Post post = new Post(UUID.randomUUID());
         post.setTitle("Any name here");
 
         assertEqualityConsistency(Post.class, post);
@@ -33,11 +32,17 @@ public class ImmutableEntityTest extends AbstractEqualityDDDCheckTest<ImmutableE
     @Table(name = "post")
     @Getter
     @Setter
-    public static class Post extends ImmutableRootJpaEntity<String> {
+    public static class Post extends ImmutableFiscalRootJpaEntity {
 
-        @Id
-        private String id;
+        Post() {
+        }
 
+        public Post(UUID id){
+            super(id);
+        }
+
+        @Column
         private String title;
+
     }
 }

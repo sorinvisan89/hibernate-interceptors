@@ -26,11 +26,14 @@ public abstract class RootJpaEntity<I> implements Persistable<I> {
     }
 
     public boolean equals(Object o) {
+
+
         if (this.getId() == null) {
             throw new RootEntityIsMissingRequiredIdException();
         } else if (this == o) {
             return true;
         } else if (o != null && this.getClass() == o.getClass()) {
+//        } else if (o instanceof RootJpaEntity) {
             RootJpaEntity<I> entity = (RootJpaEntity)o;
             return this.getId().equals(entity.getId());
         } else {

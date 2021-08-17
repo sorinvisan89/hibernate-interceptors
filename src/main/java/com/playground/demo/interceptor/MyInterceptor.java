@@ -1,8 +1,6 @@
 package com.playground.demo.interceptor;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playground.demo.entity.Audit;
-import com.playground.demo.repository.AuditRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.EmptyInterceptor;
 import org.hibernate.Transaction;
@@ -16,15 +14,10 @@ import java.util.List;
 @Slf4j
 public class MyInterceptor extends EmptyInterceptor {
 
-    private AuditRepository auditRepository;
-    private ObjectMapper objectMapper;
-
     private final List<Audit> auditUpdateDeleteEntries = new ArrayList<>();
     private final List<Audit> auditInsertEntries = new ArrayList<>();
 
     public MyInterceptor() {
-//        this.auditRepository = SpringContext.getBean(AuditRepository.class);
-//        this.objectMapper = SpringContext.getBean(ObjectMapper.class);
         log.info("MyInterceptor started session : " + Thread.currentThread().getName());
     }
 
@@ -68,14 +61,6 @@ public class MyInterceptor extends EmptyInterceptor {
 
     @Override
     public void beforeTransactionCompletion(Transaction tx) {
-        if (!auditInsertEntries.isEmpty()) {
-            auditRepository.saveAll(auditInsertEntries);
-        }
-
-        if (!auditUpdateDeleteEntries.isEmpty()) {
-            auditRepository.saveAll(auditUpdateDeleteEntries);
-        }
-
         super.beforeTransactionCompletion(tx);
     }
 }
