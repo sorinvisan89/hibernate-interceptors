@@ -25,6 +25,11 @@ public class EmployeeService {
     public List<EmployeeDTO> fetchEmployees(){
 
         final List<Employee> employees = employeeRepository.fetchEmployees();
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         return mapEmployees(employees);
     }

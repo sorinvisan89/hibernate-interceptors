@@ -1,6 +1,6 @@
-INSERT INTO department(id, name) VALUES(1, "accounting");
-INSERT INTO department(id, name) VALUES(2, "it");
-INSERT INTO department(id, name) VALUES(3, "hr");
+INSERT INTO department(id, name) VALUES(1, 'accounting');
+INSERT INTO department(id, name) VALUES(2, 'it');
+INSERT INTO department(id, name) VALUES(3, 'hr');
 
 DELIMITER $$
 
