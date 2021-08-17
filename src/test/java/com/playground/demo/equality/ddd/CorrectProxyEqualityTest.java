@@ -1,4 +1,4 @@
-package com.playground.demo.equality;
+package com.playground.demo.equality.ddd;
 
 import com.mihalcea.equality.AbstractEqualityCheckTest;
 import com.mihalcea.identifier.Identifiable;
@@ -13,7 +13,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 
-public class ProxyEqualityTest extends AbstractEqualityCheckTest<ProxyEqualityTest.Post> {
+public class CorrectProxyEqualityTest extends AbstractEqualityCheckTest<CorrectProxyEqualityTest.Post> {
 
     @Override
     protected Class<?>[] entities() {
@@ -47,7 +47,7 @@ public class ProxyEqualityTest extends AbstractEqualityCheckTest<ProxyEqualityTe
             if (this == o) return true;
             if (!(o instanceof Post)) return false;
             Post post = (Post) o;
-            return Objects.equals(id, post.id);
+            return Objects.equals(this.getId(), post.getId());
         }
 
         @Override
