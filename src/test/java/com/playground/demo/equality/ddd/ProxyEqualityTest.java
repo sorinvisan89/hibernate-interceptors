@@ -31,8 +31,8 @@ public class ProxyEqualityTest extends AbstractEqualityCheckTest<ProxyEqualityTe
         assertEqualityConsistency(Post.class, post);
     }
 
-    @Entity(name = "Post")
-    @Table(name = "post")
+    @Entity(name = "Post3")
+    @Table(name = "post3")
     @Getter
     @Setter
     public static class Post implements Identifiable<String> {

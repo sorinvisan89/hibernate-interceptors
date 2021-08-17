@@ -25,20 +25,20 @@ public class DefaultEqualityTest extends AbstractEqualityCheckTest<DefaultEquali
     @Test
     public void testEquality() {
         Post post = new Post();
-        post.setId(UUID.randomUUID().toString());
+        post.setId(UUID.randomUUID());
         post.setTitle("Any name here");
 
         assertEqualityConsistency(Post.class, post);
     }
 
-    @Entity(name = "Post")
-    @Table(name = "post")
+    @Entity(name = "Post2")
+    @Table(name = "post2")
     @Getter
     @Setter
-    public static class Post implements Identifiable<String> {
+    public static class Post implements Identifiable<UUID> {
 
         @Id
-        private String id;
+        private UUID id;
 
         private String title;
 

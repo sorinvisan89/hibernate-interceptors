@@ -1,14 +1,18 @@
 package com.playground.demo.controller;
 
 import com.playground.demo.model.EmployeeDTO;
+import com.playground.demo.model.EmployeeRequestDTO;
 import com.playground.demo.service.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -35,6 +39,13 @@ public class EmployeeController {
     @Operation(description = "Will trigger 1 query")
     ResponseEntity<List<EmployeeDTO>> getV2Employees() {
         final List<EmployeeDTO> result = employeeService.fetchEmployees();
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/v2/employees")
+    @Tag(name = "Good", description = "Optimal")
+    ResponseEntity<EmployeeDTO> addEmployee(@RequestBody @Valid EmployeeRequestDTO employeeRequestDTO) {
+        final EmployeeDTO result = employeeService.addEmployee(employeeRequestDTO);
         return ResponseEntity.ok(result);
     }
 

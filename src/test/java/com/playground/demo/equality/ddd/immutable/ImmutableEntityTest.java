@@ -28,13 +28,13 @@ public class ImmutableEntityTest extends AbstractEqualityDDDCheckTest<ImmutableE
         assertEqualityConsistency(Post.class, post);
     }
 
-    @Entity(name = "Post")
-    @Table(name = "post")
+    @Entity(name = "Post4")
+    @Table(name = "post4")
     @Getter
     @Setter
     public static class Post extends ImmutableFiscalRootJpaEntity {
 
-        Post() {
+        public Post() {
         }
 
         public Post(UUID id){

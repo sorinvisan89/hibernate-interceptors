@@ -27,7 +27,7 @@ public class DepartmentService {
 
         final List<Department> departments = departmentRepository.fetchDepartments();
 
-        return  mapDepartments(departments);
+        return mapDepartments(departments);
     }
 
     public List<DepartmentDTO> findDepartments() {
@@ -38,12 +38,50 @@ public class DepartmentService {
     }
 
     public DepartmentDTO addDepartment(DepartmentRequestDTO departmentRequestDTO) {
+
         final Department toSave = new Department();
         toSave.setDepartmentName(departmentRequestDTO.getName());
 
         final Department savedDepartment = departmentRepository.save(toSave);
 
-        return  CustomMapper.mapDepartment(savedDepartment);
+        return CustomMapper.mapDepartment(savedDepartment);
+    }
+
+    public DepartmentDTO updateDepartment(final Integer departmentId, DepartmentRequestDTO updateDepartment) {
+
+        final Department existingDepartment = departmentRepository.findById(departmentId)
+                .orElseThrow(() -> new IllegalArgumentException("Department does not exist!"));
+
+        final String oldName = existingDepartment.getDepartmentName();
+        final String newName = updateDepartment.getName();
+
+        existingDepartment.setDepartmentName(newName);
+
+        if ("noUpdate".equals(newName)) {
+            return CustomMapper.mapDepartment(new Department(existingDepartment.getDepartmentId(), oldName, existingDepartment.getEmployees()));
+
+        } else {
+            final Department saved = departmentRepository.save(existingDepartment);
+            return CustomMapper.mapDepartment(saved);
+        }
+    }
+
+    public DepartmentDTO deleteDepartment(final Integer departmentId) {
+
+        final Department toDelete = departmentRepository.findById(departmentId)
+                .orElseThrow(() -> new IllegalArgumentException("Department does not exist!"));
+
+        departmentRepository.delete(toDelete);
+
+        return CustomMapper.mapDepartment(toDelete);
+    }
+
+    public DepartmentDTO getDepartmentById(final Integer departmentId) {
+
+        final Department existingDepartment = departmentRepository.findById(departmentId)
+                .orElseThrow(() -> new IllegalArgumentException("Department does not exist!"));
+
+        return CustomMapper.mapDepartment(existingDepartment);
     }
 
 
