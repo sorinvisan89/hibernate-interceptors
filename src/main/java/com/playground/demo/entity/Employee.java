@@ -1,5 +1,6 @@
 package com.playground.demo.entity;
 
+import com.playground.demo.interceptor.Auditable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,7 +15,7 @@ import java.util.Objects;
 @ToString
 @Entity
 @Table(name = "employee")
-public class Employee {
+public class Employee implements Auditable {
 
     @Id
     @Column(name = "id")
@@ -26,6 +27,7 @@ public class Employee {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_department")
+    @ToString.Exclude
     private Department parentDepartment;
 
     @Column(name = "salary")
@@ -43,5 +45,15 @@ public class Employee {
     @Override
     public int hashCode() {
         return 949447908;
+    }
+
+    @Override
+    public Integer getEntityId() {
+        return employeeId;
+    }
+
+    @Override
+    public String getEntityName() {
+        return "employee";
     }
 }

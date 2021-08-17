@@ -3,6 +3,7 @@ package com.playground.demo.service;
 import com.playground.demo.entity.Department;
 import com.playground.demo.mapper.CustomMapper;
 import com.playground.demo.model.DepartmentDTO;
+import com.playground.demo.model.DepartmentRequestDTO;
 import com.playground.demo.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,16 @@ public class DepartmentService {
 
         return mapDepartments(departments);
     }
+
+    public DepartmentDTO addDepartment(DepartmentRequestDTO departmentRequestDTO) {
+        final Department toSave = new Department();
+        toSave.setDepartmentName(departmentRequestDTO.getName());
+
+        final Department savedDepartment = departmentRepository.save(toSave);
+
+        return  CustomMapper.mapDepartment(savedDepartment);
+    }
+
 
     private List<DepartmentDTO> mapDepartments(final List<Department> departments) {
         return departments.stream()

@@ -1,5 +1,6 @@
 package com.playground.demo.entity;
 
+import com.playground.demo.interceptor.Auditable;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -17,7 +18,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "department")
-public class Department {
+public class Department implements Auditable {
 
     @Id
     @Column(name = "id")
@@ -43,5 +44,15 @@ public class Department {
     @Override
     public int hashCode() {
         return 1487346027;
+    }
+
+    @Override
+    public Integer getEntityId() {
+        return departmentId;
+    }
+
+    @Override
+    public String getEntityName() {
+        return "department";
     }
 }
