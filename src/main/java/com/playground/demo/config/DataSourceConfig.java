@@ -12,10 +12,10 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import javax.sql.DataSource;
 
 @Configuration
+@Profile("test")
 public class DataSourceConfig {
 
     @Bean
-    @Profile("test")
     public DataSource proxyCounter() {
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
