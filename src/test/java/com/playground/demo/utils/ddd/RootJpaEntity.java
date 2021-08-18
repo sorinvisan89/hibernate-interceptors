@@ -1,4 +1,4 @@
-package com.playground.demo.equality.ddd.utils;
+package com.playground.demo.utils.ddd;
 
 import org.springframework.data.domain.Persistable;
 

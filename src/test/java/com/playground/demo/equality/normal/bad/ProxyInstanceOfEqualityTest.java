@@ -14,7 +14,10 @@ import java.util.Objects;
 import java.util.UUID;
 
 
-
+/**
+ * This test uses a provided Id
+ * Will fail since proxy class is not equal to entity class. Should use instanceof or HibernateUtils get class in the equals method
+ */
 public class ProxyInstanceOfEqualityTest extends AbstractEqualityCheckTest<ProxyInstanceOfEqualityTest.Post> {
 
     @Override

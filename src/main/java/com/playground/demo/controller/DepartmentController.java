@@ -40,6 +40,7 @@ public class DepartmentController {
 
     @PostMapping("/v2/departments")
     @Tag(name = "Good", description = "Optimal")
+    @Operation(description = "Add a department")
     ResponseEntity<DepartmentDTO> addDepartment(@RequestBody @Valid DepartmentRequestDTO departmentRequestDTO) {
         final DepartmentDTO result = departmentService.addDepartment(departmentRequestDTO);
         return ResponseEntity.ok(result);
@@ -47,6 +48,7 @@ public class DepartmentController {
 
     @DeleteMapping("/v2/departments/{id}")
     @Tag(name = "Good", description = "Optimal")
+    @Operation(description = "Delete a department by Id")
     ResponseEntity<DepartmentDTO> deleteDepartment(@PathVariable("id") Integer departmentId) {
         final DepartmentDTO result = departmentService.deleteDepartment(departmentId);
         return ResponseEntity.ok(result);
@@ -54,6 +56,7 @@ public class DepartmentController {
 
     @PutMapping("/v2/departments/{id}")
     @Tag(name = "Good", description = "Optimal")
+    @Operation(description = "Updated a department by Id")
     ResponseEntity<DepartmentDTO> updateDepartment(@PathVariable("id") Integer departmentId, @RequestBody @Valid DepartmentRequestDTO departmentRequestDTO) {
         final DepartmentDTO result = departmentService.updateDepartment(departmentId, departmentRequestDTO);
         return ResponseEntity.ok(result);
@@ -61,6 +64,7 @@ public class DepartmentController {
 
     @GetMapping("/v2/departments/{id}")
     @Tag(name = "Good", description = "Optimal")
+    @Operation(description = "Get a department by Id")
     ResponseEntity<DepartmentDTO> getDepartmentById(@PathVariable("id") Integer departmentId) {
         final DepartmentDTO result = departmentService.getDepartmentById(departmentId);
         return ResponseEntity.ok(result);

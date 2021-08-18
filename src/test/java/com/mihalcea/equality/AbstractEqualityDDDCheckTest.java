@@ -1,7 +1,7 @@
 package com.mihalcea.equality;
 
 import com.mihalcea.util.AbstractTest;
-import com.playground.demo.equality.ddd.utils.ImmutableRootJpaEntity;
+import com.playground.demo.utils.ddd.ImmutableRootJpaEntity;
 import org.hibernate.Session;
 
 import java.io.Serializable;

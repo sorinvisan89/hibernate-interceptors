@@ -14,6 +14,10 @@ import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * This test uses a provided Id.
+ * Will fail since we have BigDecimal member which when retrieved after persisted will take into account the DB scale and precision specifications.
+ */
 public class BigDecimalEqualityTest extends AbstractEqualityCheckTest<BigDecimalEqualityTest.Post> {
 
     @Override

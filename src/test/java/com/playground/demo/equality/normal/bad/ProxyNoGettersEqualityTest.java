@@ -13,7 +13,10 @@ import javax.persistence.Table;
 import java.util.Objects;
 import java.util.UUID;
 
-
+/**
+ * This test uses a provided Id
+ * Will fail since proxy class are null, values in the equals methods should be retrieved by getters and not accessed directly.
+ */
 public class ProxyNoGettersEqualityTest extends AbstractEqualityCheckTest<ProxyNoGettersEqualityTest.Post> {
 
     @Override
