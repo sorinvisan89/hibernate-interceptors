@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.junit.Test;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -13,7 +14,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 
-public class ProxyEqualityTest extends AbstractEqualityCheckTest<ProxyEqualityTest.Post> {
+public class ProxyNoGettersEqualityTest extends AbstractEqualityCheckTest<ProxyNoGettersEqualityTest.Post> {
 
     @Override
     protected Class<?>[] entities() {
@@ -40,6 +41,7 @@ public class ProxyEqualityTest extends AbstractEqualityCheckTest<ProxyEqualityTe
         @Id
         private String id;
 
+        @Column
         private String title;
 
         @Override
