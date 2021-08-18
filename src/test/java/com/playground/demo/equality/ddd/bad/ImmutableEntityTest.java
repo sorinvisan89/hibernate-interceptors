@@ -34,7 +34,7 @@ public class ImmutableEntityTest extends AbstractEqualityDDDCheckTest<ImmutableE
     @Setter
     public static class Post extends ImmutableFiscalRootJpaEntity {
 
-        public Post() {
+        private Post() {
         }
 
         public Post(UUID id){
