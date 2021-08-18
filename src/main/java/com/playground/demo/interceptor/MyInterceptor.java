@@ -11,6 +11,9 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * This interceptor is thread safe since it will be constructed per session, not per session factory.
+ */
 @Slf4j
 public class MyInterceptor extends EmptyInterceptor {
 

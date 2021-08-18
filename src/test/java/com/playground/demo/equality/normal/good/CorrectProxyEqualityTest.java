@@ -1,4 +1,4 @@
-package com.playground.demo.equality.ddd;
+package com.playground.demo.equality.normal.good;
 
 import com.mihalcea.equality.AbstractEqualityCheckTest;
 import com.mihalcea.identifier.Identifiable;
@@ -13,7 +13,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 
-public class DefaultEqualityTest extends AbstractEqualityCheckTest<DefaultEqualityTest.Post> {
+public class CorrectProxyEqualityTest extends AbstractEqualityCheckTest<CorrectProxyEqualityTest.Post> {
 
     @Override
     protected Class<?>[] entities() {
@@ -28,11 +28,12 @@ public class DefaultEqualityTest extends AbstractEqualityCheckTest<DefaultEquali
         post.setId(UUID.randomUUID());
         post.setTitle("Any name here");
 
+
         assertEqualityConsistency(Post.class, post);
     }
 
-    @Entity(name = "Post2")
-    @Table(name = "post2")
+    @Entity(name = "Post1")
+    @Table(name = "post1")
     @Getter
     @Setter
     public static class Post implements Identifiable<UUID> {
@@ -45,9 +46,9 @@ public class DefaultEqualityTest extends AbstractEqualityCheckTest<DefaultEquali
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (!(o instanceof Post)) return false;
             Post post = (Post) o;
-            return Objects.equals(id, post.id);
+            return Objects.equals(this.getId(), post.getId());
         }
 
         @Override

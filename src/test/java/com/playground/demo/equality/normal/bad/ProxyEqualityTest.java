@@ -1,4 +1,4 @@
-package com.playground.demo.equality.ddd;
+package com.playground.demo.equality.normal.bad;
 
 import com.mihalcea.equality.AbstractEqualityCheckTest;
 import com.mihalcea.identifier.Identifiable;
@@ -47,6 +47,7 @@ public class ProxyEqualityTest extends AbstractEqualityCheckTest<ProxyEqualityTe
             if (this == o) return true;
             if (!(o instanceof Post)) return false;
             Post post = (Post) o;
+            // We need getters here since proxy members are null
             return Objects.equals(id, post.id);
         }
 

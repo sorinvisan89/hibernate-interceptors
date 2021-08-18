@@ -1,4 +1,4 @@
-package com.playground.demo.equality.ddd.immutable;
+package com.playground.demo.equality.ddd.bad;
 
 import com.mihalcea.equality.AbstractEqualityDDDCheckTest;
 import com.playground.demo.equality.ddd.utils.ImmutableFiscalRootJpaEntity;
