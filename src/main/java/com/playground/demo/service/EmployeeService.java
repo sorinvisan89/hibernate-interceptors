@@ -21,25 +21,30 @@ public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
     private final DepartmentRepository departmentRepository;
+    private final CustomMapper customMapper;
 
     @Autowired
-    public EmployeeService(final EmployeeRepository employeeRepository, final DepartmentRepository departmentRepository) {
+    public EmployeeService(
+            final EmployeeRepository employeeRepository,
+            final DepartmentRepository departmentRepository,
+            final CustomMapper customMapper) {
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
+        this.customMapper = customMapper;
     }
 
     public List<EmployeeDTO> fetchEmployees() {
 
         final List<Employee> employees = employeeRepository.fetchEmployees();
 
-        return mapEmployees(employees);
+        return customMapper.mapEmployees(employees);
     }
 
     public List<EmployeeDTO> findAllEmployees() {
 
         final List<Employee> employees = employeeRepository.findAll();
 
-        return mapEmployees(employees);
+        return customMapper.mapEmployees(employees);
     }
 
     public EmployeeDTO addEmployee(final EmployeeRequestDTO employeeRequest) {
@@ -55,13 +60,7 @@ public class EmployeeService {
         department.getEmployees().add(employee);
 
         final Employee saved = employeeRepository.save(employee);
-        return CustomMapper.mapEmployee(saved);
+        return customMapper.mapEmployee(saved);
     }
 
-
-    private List<EmployeeDTO> mapEmployees(final List<Employee> employees) {
-        return employees.stream()
-                .map(CustomMapper::mapEmployee)
-                .collect(Collectors.toList());
-    }
 }

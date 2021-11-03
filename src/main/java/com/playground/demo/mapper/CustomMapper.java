@@ -4,44 +4,31 @@ import com.playground.demo.entity.Department;
 import com.playground.demo.entity.Employee;
 import com.playground.demo.model.DepartmentDTO;
 import com.playground.demo.model.EmployeeDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
+import org.mapstruct.ReportingPolicy;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-public class CustomMapper {
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR)
+public interface CustomMapper {
 
-    public static DepartmentDTO mapDepartment(final Department department) {
-        final DepartmentDTO departmentDTO = new DepartmentDTO();
-        departmentDTO.setName(department.getDepartmentName());
-        departmentDTO.setId(department.getDepartmentId());
+    @Mappings({
+            @Mapping(target = "id", source = "departmentId"),
+            @Mapping(target = "name", source = "departmentName")
+    })
+    DepartmentDTO mapDepartment(final Department entity);
 
-        List<EmployeeDTO> employeeDTOS = new ArrayList<>();
+    List<DepartmentDTO> mapDepartments(final List<Department> departments);
 
-        department.getEmployees().forEach(employee -> {
-            final EmployeeDTO employeeDTO = mapEmployee(employee);
-            employeeDTOS.add(employeeDTO);
-        });
+    @Mappings({
+            @Mapping(target = "id", source = "employeeId"),
+            @Mapping(target = "departmentName", source = "parentDepartment.departmentName"),
+            @Mapping(target = "departmentId", source = "parentDepartment.departmentId")
+    })
+    EmployeeDTO mapEmployee(final Employee employee);
 
-        departmentDTO.setEmployees(
-                Optional.of(employeeDTOS)
-                        .filter(list -> !list.isEmpty())
-                        .orElse(null)
-        );
-        return departmentDTO;
-    }
+    List<EmployeeDTO> mapEmployees(final List<Employee> employees);
 
-    public static EmployeeDTO mapEmployee(final Employee employee) {
-
-        final EmployeeDTO result = new EmployeeDTO();
-
-        result.setId(employee.getEmployeeId());
-        result.setName(employee.getName());
-        result.setSalary(employee.getSalary());
-
-        result.setDepartmentId(employee.getParentDepartment().getDepartmentId());
-        result.setDepartmentName(employee.getParentDepartment().getDepartmentName());
-
-        return result;
-    }
 }

@@ -11,31 +11,34 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class DepartmentService {
 
     private final DepartmentRepository departmentRepository;
+    private final CustomMapper customMapper;
 
     @Autowired
-    public DepartmentService(final DepartmentRepository departmentRepository) {
+    public DepartmentService(
+            final DepartmentRepository departmentRepository,
+            final CustomMapper customMapper) {
         this.departmentRepository = departmentRepository;
+        this.customMapper = customMapper;
     }
 
     public List<DepartmentDTO> fetchDepartments() {
 
         final List<Department> departments = departmentRepository.fetchDepartments();
 
-        return mapDepartments(departments);
+        return customMapper.mapDepartments(departments);
     }
 
     public List<DepartmentDTO> findDepartments() {
 
         final List<Department> departments = departmentRepository.findAll();
 
-        return mapDepartments(departments);
+        return customMapper.mapDepartments(departments);
     }
 
     public DepartmentDTO addDepartment(DepartmentRequestDTO departmentRequestDTO) {
@@ -45,7 +48,7 @@ public class DepartmentService {
 
         final Department savedDepartment = departmentRepository.save(toSave);
 
-        return CustomMapper.mapDepartment(savedDepartment);
+        return customMapper.mapDepartment(savedDepartment);
     }
 
     public DepartmentDTO updateDepartment(final Integer departmentId, DepartmentRequestDTO updateDepartment) {
@@ -59,11 +62,14 @@ public class DepartmentService {
         existingDepartment.setDepartmentName(newName);
 
         if ("noUpdate".equals(newName)) {
-            return CustomMapper.mapDepartment(new Department(existingDepartment.getDepartmentId(), oldName, existingDepartment.getEmployees()));
+            final Department original = new Department(existingDepartment.getDepartmentId(), oldName, existingDepartment.getEmployees());
+
+            return customMapper.mapDepartment(original);
 
         } else {
             final Department saved = departmentRepository.save(existingDepartment);
-            return CustomMapper.mapDepartment(saved);
+
+            return customMapper.mapDepartment(saved);
         }
     }
 
@@ -74,7 +80,7 @@ public class DepartmentService {
 
         departmentRepository.delete(toDelete);
 
-        return CustomMapper.mapDepartment(toDelete);
+        return customMapper.mapDepartment(toDelete);
     }
 
     public DepartmentDTO getDepartmentById(final Integer departmentId) {
@@ -82,15 +88,7 @@ public class DepartmentService {
         final Department existingDepartment = departmentRepository.findById(departmentId)
                 .orElseThrow(() -> new EntityNotFoundException("Department does not exist!"));
 
-        return CustomMapper.mapDepartment(existingDepartment);
-    }
-
-
-    private List<DepartmentDTO> mapDepartments(final List<Department> departments) {
-        return departments.stream()
-                .map(CustomMapper::mapDepartment)
-                .collect(Collectors.toList());
-
+        return customMapper.mapDepartment(existingDepartment);
     }
 
 }
