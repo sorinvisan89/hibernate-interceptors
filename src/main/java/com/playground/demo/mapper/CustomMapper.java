@@ -25,7 +25,8 @@ public interface CustomMapper {
     @Mappings({
             @Mapping(target = "id", source = "employeeId"),
             @Mapping(target = "departmentName", source = "parentDepartment.departmentName"),
-            @Mapping(target = "departmentId", source = "parentDepartment.departmentId")
+            @Mapping(target = "departmentId", source = "parentDepartment.departmentId"),
+//            @Mapping(target = "salary", ignore = true)
     })
     EmployeeDTO mapEmployee(final Employee employee);
 
