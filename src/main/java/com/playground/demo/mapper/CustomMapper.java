@@ -2,8 +2,10 @@ package com.playground.demo.mapper;
 
 import com.playground.demo.entity.Department;
 import com.playground.demo.entity.Employee;
+import com.playground.demo.entity.TestEntity;
 import com.playground.demo.model.DepartmentDTO;
 import com.playground.demo.model.EmployeeDTO;
+import com.playground.demo.model.TestDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -29,6 +31,9 @@ public interface CustomMapper {
 //            @Mapping(target = "salary", ignore = true)
     })
     EmployeeDTO mapEmployee(final Employee employee);
+
+
+    TestDTO mapTest(final TestEntity entity);
 
     List<EmployeeDTO> mapEmployees(final List<Employee> employees);
 
